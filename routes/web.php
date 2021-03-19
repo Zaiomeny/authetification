@@ -17,9 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middlzware' => ['auth']], function(){
+Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard','App\Http\Controllers\DashboardController@index')
             ->name('dashboard');
 });
+
 
 require __DIR__.'/auth.php';

@@ -38,15 +38,21 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|confirmed|min:8',
             
         ]);
-
-        Auth::login($user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]));
-        $user->attachRole($request->role_id);
-        event(new Registered($user));
-
-        return redirect(RouteServiceProvider::HOME);
+       
+            //Auth::login(
+                $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);//);
+            $user->attachRole($request->role_id);
+            //event(new Registered($user));
+            if(!empty(Auth::user())){
+                return redirect('dashboard');
+            }else{
+                return redirect('login');
+            }
+            
+            //return redirect(RouteServiceProvider::HOME);        
     }
 }
